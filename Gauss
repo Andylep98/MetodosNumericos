@@ -1,0 +1,44 @@
+clc  
+clear  
+format long 
+fprintf('Gauss\n\n');
+A=input('Ingrese la matriz\n');
+b=input('\nIngrese el vector de los términos independientes\n');
+[n,m]=size(A);
+C=[A,b];
+if n==m 
+    for k=1:(n-1)
+         fprintf('\n ETAPA %g=\n\n',k)
+         fprintf('\nLa matriz correspondiente a esta etapa antes del proceso:\n')
+         disp(C)
+         fprintf('\nLos Multiplicadores correpondientes a esta etapa son:\n')
+        for i=(k+1):n
+            m(i,k)=C(i,k)/C(k,k);
+            fprintf('\nm(%g,%g)=',i,k)
+            disp(m(i,k));
+            for j=k:(n+1)
+                C(i,j)= C(i,j) - m(i,k)*C(k,j);
+            end
+        end
+        fprintf('\nLa matriz correspondiente a esta etapa despues del proceso:\n')
+         disp(C)
+    end
+    for i=n:-1:1
+        suma=0;
+        for p=(i+1):n
+            suma = suma + C(i,p)*X(p);
+        end
+        X(i)=(C(i,n+1)-suma)/C(i,i);
+    end
+else
+    fprintf('\nERROR: La matriz NO es cuadrada\n');
+end
+fprintf('\nSOLUCIÓN:\n');
+fprintf('\nLa matriz es: \n');
+disp(C)
+fprintf('\nLa solucion de X1 hasta Xn es:\n');
+for i=1:n
+    Xi=X(1,i);
+    fprintf('\nX%g=',i)
+    disp(Xi);
+end
